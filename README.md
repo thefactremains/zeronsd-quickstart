@@ -12,9 +12,7 @@ It was DNS.<br>
 ## Status
 
 * This is *very much* alpha software.
-* Deployment options are currently Source, Cargo, and Docker.
-* This may end up integrated into ZeroTier 2.0, but for now, it is
-  segregated to allow us to iterate and learn as quickly as possible.
+* This may end up integrated into ZeroTier 2.0, but for now, it is segregated to allow us to iterate quickly.
 * Here be Dragons.
 
 ## Conceptual Prerequisites
@@ -38,13 +36,13 @@ follow along step by step, you'll need to provision equivalent
 infrastructure. If you use different platforms, you should be able to
 figure out what to do with minimal effort.
 
-### Create a ZeroTier Network
+## Create a ZeroTier Network
 
 You may do this manually through the [ZeroTier Central WebUI](https://my.zerotier.com), 
 
 ![Create a Network](https://i.imgur.com/L6xtGKo.png)
 
-### Install ZeroTier
+## Install ZeroTier
 
 ZeroTier must be installed and joined to the network you intend to provide DNS service to.
 The following should work from the CLI on most plaforms. Windows users
@@ -63,31 +61,53 @@ user@osx:~$ zerotier-cli join 159924d630edb88e
 user@osx:~$ zerotier-cli  set 159924d630edb88e allowDNS=1
 ```
 
-
-### Authorize the Nodes
+## Authorize the Nodes
 
 Authoriz the node to the network by clicking the "Auth" button in the
 `Members` section in the
 [ZeroTier Central WebUI](https://my.zerotier.com).
 
-
 ![Authorize the Member](https://i.imgur.com/fQTai9l.png)
 
-# Install ZeroNSD
+## Provision a Central Token
 
-## Debian / Ubuntu
+Before we begin, we will need to log into [my.zerotier.com](https://my.zerotier.com) and create an API
+token under the [Account](https://my.zerotier.com/account)
+section. ZeroNSD will use this token to read Network members so it can
+generate records, as well as update DNS settings.
+
+![](https://i.imgur.com/WYM2jKl.png)
+
+You will need to stash this in a file for ZeroNSD to read.
+
+```
+root@ubuntu:~# echo ZEROTIER_CENTRAL_TOKEN > /var/lib/zerotier-one/central-token
+root@ubuntu:~# chown zerotier-one:zerotier-one /var/lib/zerotier-one/central-token
+root@ubuntu:~# chmod 600 /var/lib/zerotier-one/central-token
+```
+
+## Install ZeroNSD
+
+ZeroNSD should only run on one node per network. Latency for DNS
+really matters, so try to place it as close to the clients as
+possible.
+
+### Packages
+
+ZeroNSD publishes rpm, deb, and msi packages, available at https://github.com/zerotier/zeronsd/releases 
+
+```
+root@ubuntu:~# wget wget https://github.com/zerotier/zeronsd/releases/download/v0.1.2/zeronsd_0.1.2_amd64.deb
+root@ubuntu:~# dpkg -i zeronsd_0.1.2_amd64.deb
+```
+
+### Cargo
+
+If we don't have packages for your platform, you can install it with cargo.
 
 ```
 root@ubuntu:~# /usr/bin/apt-get -y install net-tools librust-openssl-dev pkg-config cargo
 root@ubuntu:~# /usr/bin/cargo install zeronsd --root /usr/local
-```
-
-Write your ZeroTier Central token to a file.
-
-```
-root@ubuntu:~# echo "YOURTOKENHERE" > /var/lib/zerotier-one/central-token
-root@ubuntu:~# chown zerotier-one:zerotier-one /var/lib/zerotier-one/central-token
-root@ubuntu:~# chmod 600 /var/lib/zerotier-one/central-token
 ```
 
 ## Systemd
