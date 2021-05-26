@@ -92,12 +92,10 @@ root@ubuntu:~# chmod 600 /var/lib/zerotier-one/central-token
 
 ## Systemd
 
-We have a project for per-interface DNS resolution in the works. If
-you're curious, you can check it out
-[here](https://github.com/zerotier/zerotier-systemd-manager).
+We have a project for per-interface DNS resolution in the works. 
+If you're curious, you can check it out [here](https://github.com/zerotier/zerotier-systemd-manager).
 
-Until then, just drop this into your systemd units directory and
-replace the network number with your own.
+Until then, just drop this into your systemd units directory, and replace the network ID with your own.
 
 ```
 root@ubuntu:~# cat <<EOF> /lib/systemd/system/zeronsd.service
