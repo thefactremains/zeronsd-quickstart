@@ -213,7 +213,7 @@ resolution out of the box. To test DNS queries against ZeroNSD without
 itself to, and run queries against it explicitly.
 
 ```
-lsof -i -n | grep ^zeronsd | grep UDP | awk '{ print $9 }' | cut -f1 -d:
+sudo lsof -i -n | grep ^zeronsd | grep UDP | awk '{ print $9 }' | cut -f1 -d:
 172.22.245.70
 ```
 
