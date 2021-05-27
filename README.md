@@ -211,9 +211,9 @@ PING laptop.beyond.corp (172.22.192.177) 56(84) bytes of data.
 ```
 
 Most Linux distributions, by default, do not have per-interface DNS
-resolution out of the box. To test DNS queries against ZeroNSD, find
-the IP address that ZeroNSD has bound itself to, and run queries
-against it explicitly.
+resolution out of the box. To test DNS queries against ZeroNSD without
+`zerotier-systemd-manager`, find the IP address that ZeroNSD has bound
+itself to, and run queries against it explicitly.
 
 ```
 lsof -i -n | grep ^zeronsd | grep UDP | awk '{ print $9 }' | cut -f1 -d:
