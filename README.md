@@ -89,10 +89,11 @@ chmod 600 ~/.token
 
 ## ZeroTier Systemd Manager
 
-These instructions assume your Linux distribution comes with an
-outdated Go version.
+ZeroTier Systemd Manager requires Go v1.16 or later. The instructions
+below will install a working Go environment, allowing a "go get".
 
-We will be providing packages very soon.
+We will be providing rpms and debs very soon.
+
 
 ```
 curl -O https://storage.googleapis.com/golang/go1.16.4.linux-amd64.tar.gz
