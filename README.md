@@ -160,10 +160,8 @@ Finally, restart all the ZeroTier services.
 ```
 systemctl daemon-reload
 systemctl restart zerotier-one
-systemctl enable  zerotier-systemd-manager.service
 systemctl enable  zerotier-systemd-manager.timer
 systemctl restart zerotier-systemd-manager.service
-systemctl restart zerotier-systemd-manager.timer
 ```
 
 ## Install ZeroNSD
