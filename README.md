@@ -182,38 +182,6 @@ systemctl restart zerotier-systemd-manager
 systemctl enable  zerotier-systemd-manager
 ```
 
-## Old Systemd
-We have a project for per-interface DNS resolution in the works. 
-If you're curious, you can check it out [here](https://github.com/zerotier/zerotier-systemd-manager).
-
-Until then, just drop this into your systemd units directory, and replace the network ID with your own.
-
-```
-root@ubuntu:~# cat <<EOF> /lib/systemd/system/zeronsd.service
-[Unit]
-Description=ZeroNSD
-User=zerotier-one
-Group=zerotier-one
-Requires=zerotier-one.service
-
-[Service]
-ExecStart=/usr/local/bin/zeronsd start 159924d630edb88e -d beyond.corp -s /var/lib/zerotier-one/authtoken.secret -t /var/lib/zerotier-one/central-token -f /etc/hosts
-Restart=always
-KillMode=process
-
-[Install]
-WantedBy=multi-user.target
-EOF
-```
-
-Finally,
-
-```
-root@ubuntu:~# systemctl daemon-reload
-root@ubuntu:~# systemctl enable zeronsd
-root@ubuntu:~# systemctl restart zeronsd
-```
-
 ## Verify functionality
 
 Most Linux distributions, by default, do not have per-interface DNS
