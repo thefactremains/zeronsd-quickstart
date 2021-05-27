@@ -102,7 +102,7 @@ export GOROOT=/usr/local/go
 go get github.com/zerotier/zerotier-systemd-manager
 ```
 
-We need to patch the `zerotier-one` unit, as we want systemd-networkd.
+We need to patch the `zerotier-one` unit, as we want `systemd-networkd`.
 
 ```
 cat <<EOF> /lib/systemd/system/zerotier-one.service
