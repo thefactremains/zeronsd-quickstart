@@ -37,8 +37,6 @@ follow along step by step, you'll need to provision equivalent
 infrastructure. If you use different platforms, you should be able to
 figure out what to do with minimal effort.
 
-## P
-
 ## Create a ZeroTier Network
 
 You may do this manually through the [ZeroTier Central WebUI](https://my.zerotier.com),
