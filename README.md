@@ -2,6 +2,7 @@
 # ZeroNSD Quickstart
 
 <p align="center">
+<img src="https://avatars.githubusercontent.com/u/4173285?s=200&v=4" alt="ZeroNSD" style="width:100%;"><br>
 <b><i>
 It's not DNS.<br>
 There's no way it's DNS.<br>
@@ -38,7 +39,7 @@ figure out what to do with minimal effort.
 
 ## Create a ZeroTier Network
 
-You may do this manually through the [ZeroTier Central WebUI](https://my.zerotier.com), 
+You may do this manually through the [ZeroTier Central WebUI](https://my.zerotier.com),
 
 ![Create a Network](https://i.imgur.com/L6xtGKo.png)
 
@@ -88,15 +89,20 @@ chmod 600 ~/.token
 
 ## ZeroTier Systemd Manager
 
+These instructions assume your Linux distribution comes with an
+outdated Go version.
+
+We will be providing packages very soon.
+
 ```
 curl -O https://storage.googleapis.com/golang/go1.16.4.linux-amd64.tar.gz
 tar xzvf go1.16.4.linux-amd64.tar.gz -C /usr/local/
-
 export GOPATH=/usr
 export GOROOT=/usr/local/go
-
 go get github.com/zerotier/zerotier-systemd-manager
 ```
+
+We need to patch the `zerotier-one` unit, as we want systemd-networkd.
 
 ```
 cat <<EOF> /lib/systemd/system/zerotier-one.service
@@ -114,6 +120,8 @@ KillMode=process
 WantedBy=multi-user.target
 EOF
 ```
+
+Two more files for systemd.. timer and service units.
 
 ```
 cat <<EOF> /lib/systemd/system/zerotier-systemd-manager.timer
@@ -147,15 +155,15 @@ WantedBy=multi-user.target
 EOF
 ```
 
-Enable and start zerotier-systemd-manager
+Finally, restart all the ZeroTier services.
 
 ```
 systemctl daemon-reload
 systemctl restart zerotier-one
-systemctl restart zerotier-systemd-manager.service
-systemctl restart zerotier-systemd-manager.timer
 systemctl enable  zerotier-systemd-manager.service
 systemctl enable  zerotier-systemd-manager.timer
+systemctl restart zerotier-systemd-manager.service
+systemctl restart zerotier-systemd-manager.timer
 ```
 
 ## Install ZeroNSD
@@ -166,7 +174,7 @@ possible.
 
 ### Packages
 
-ZeroNSD publishes rpm, deb, and msi packages, available at https://github.com/zerotier/zeronsd/releases 
+ZeroNSD publishes rpm, deb, and msi packages, available at https://github.com/zerotier/zeronsd/releases
 
 ```
 wget https://github.com/zerotier/zeronsd/releases/download/v0.1.3/zeronsd_0.1.3_amd64.deb
@@ -183,6 +191,8 @@ If we don't have packages for your platform, you can install it with cargo.
 ```
 
 ## Serve DNS
+
+For each network you want to serve DNS for, do the following
 
 ```
 zeronsd supervise -t ~/.token -f /etc/hosts -d beyond.corp 159924d630edb88e
@@ -251,17 +261,17 @@ To check out the system resolver settings, use: `scutil --dns`.
 
 The Ubuntu machine can be queried with
 
-`dns-sd -G v4 server.beyond.corp`  
+`dns-sd -G v4 server.beyond.corp`
 `dns-sd -G v4 zt-3513e8b98d.beyond.corp`
 
 The OSX machine be queried with
 
-`dns-sd -G v4 laptop.beyond.corp`  
+`dns-sd -G v4 laptop.beyond.corp`
 `dns-sd -G v4 zt-eff05def90.beyond.corp`
 
 ## Windows
 
-Are you a Windows user?  
-Does this work out of the box?  
-Does nslookup behave properly?  
+Are you a Windows user?
+Does this work out of the box?
+Does nslookup behave properly?
 Let us know... feedback and pull requests welcome =)
