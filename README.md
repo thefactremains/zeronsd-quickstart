@@ -197,6 +197,7 @@ For each network you want to serve DNS for, do the following
 ```
 zeronsd supervise -t ~/.token -f /etc/hosts -d beyond.corp 159924d630edb88e
 systemctl start zeronsd-159924d630edb88e
+systemctl enable zeronsd-159924d630edb88e
 ```
 
 ## Verify functionality
