@@ -21,7 +21,7 @@ It was DNS.<br>
 * When ZeroTier joins a network, it creates a virtual network interface.
 * When ZeroTier joins mutiple networks, there will be multiple network interfaces.
 * When ZeroNSD starts, it binds to a ZeroTier network interface.
-* When ZeroTier is joined to multiple networks, it need multiple ZeroNSDs, one for each interface.
+* When ZeroTier is joined to multiple networks, it needs multiple ZeroNSDs, one for each interface.
 
 This means:
 
