@@ -200,6 +200,16 @@ systemctl enable zeronsd-159924d630edb88e
 
 ## Verify functionality
 
+You should be able to ping the laptop via it's DNS name.
+
+```
+root@ubuntu:~# ping laptop.beyond.corp
+PING laptop.beyond.corp (172.22.192.177) 56(84) bytes of data.
+64 bytes from 172.22.192.177 (172.22.192.177): icmp_seq=1 ttl=64 time=50.1 ms
+64 bytes from 172.22.192.177 (172.22.192.177): icmp_seq=2 ttl=64 time=49.5 ms
+64 bytes from 172.22.192.177 (172.22.192.177): icmp_seq=3 ttl=64 time=48.6 ms
+```
+
 Most Linux distributions, by default, do not have per-interface DNS
 resolution out of the box. To test DNS queries against ZeroNSD, find
 the IP address that ZeroNSD has bound itself to, and run queries
