@@ -81,33 +81,9 @@ generate records, as well as update DNS settings.
 You will need to stash this in a file for ZeroNSD to read.
 
 ```
-root@ubuntu:~# echo ZEROTIER_CENTRAL_TOKEN > /var/lib/zerotier-one/central-token
-root@ubuntu:~# chown zerotier-one:zerotier-one /var/lib/zerotier-one/central-token
-root@ubuntu:~# chmod 600 /var/lib/zerotier-one/central-token
-```
-
-## Install ZeroNSD
-
-ZeroNSD should only run on one node per network. Latency for DNS
-really matters, so try to place it as close to the clients as
-possible.
-
-### Packages
-
-ZeroNSD publishes rpm, deb, and msi packages, available at https://github.com/zerotier/zeronsd/releases 
-
-```
-root@ubuntu:~# wget https://github.com/zerotier/zeronsd/releases/download/v0.1.3/zeronsd_0.1.3_amd64.deb
-root@ubuntu:~# dpkg -i zeronsd_0.1.3_amd64.deb
-```
-
-### Cargo
-
-If we don't have packages for your platform, you can install it with cargo.
-
-```
-root@ubuntu:~# /usr/bin/apt-get -y install net-tools librust-openssl-dev pkg-config cargo
-root@ubuntu:~# /usr/bin/cargo install zeronsd --root /usr/local
+echo ZEROTIER_CENTRAL_TOKEN > ~/.token
+chown zerotier-one:zerotier-one ~/.token
+chmod 600 ~/.token
 ```
 
 ## ZeroTier Systemd Manager
@@ -173,14 +149,41 @@ EOF
 
 Enable and start zerotier-systemd-manager
 
-`root@ubuntu:~#`
-
 ```
 systemctl daemon-reload
 systemctl restart zerotier-one
 systemctl restart zerotier-systemd-manager
 systemctl enable  zerotier-systemd-manager
 ```
+
+## Install ZeroNSD
+
+ZeroNSD should only run on one node per network. Latency for DNS
+really matters, so try to place it as close to the clients as
+possible.
+
+### Packages
+
+ZeroNSD publishes rpm, deb, and msi packages, available at https://github.com/zerotier/zeronsd/releases 
+
+```
+wget https://github.com/zerotier/zeronsd/releases/download/v0.1.3/zeronsd_0.1.3_amd64.deb
+dpkg -i zeronsd_0.1.3_amd64.deb
+```
+
+### Cargo
+
+If we don't have packages for your platform, you can install it with cargo.
+
+```
+/usr/bin/apt-get -y install net-tools librust-openssl-dev pkg-config cargo
+/usr/bin/cargo install zeronsd --root /usr/local
+```
+
+## Serve DNS
+
+zeronsd supervise -t ~/.token -f /etc/hosts -d beyond.corp 159924d630edb88e
+
 
 ## Verify functionality
 
@@ -190,7 +193,7 @@ the IP address that ZeroNSD has bound itself to, and run queries
 against it explicitly.
 
 ```
-root@ubuntu:~# lsof -i -n | grep ^zeronsd | grep UDP | awk '{ print $9 }' | cut -f1 -d:
+lsof -i -n | grep ^zeronsd | grep UDP | awk '{ print $9 }' | cut -f1 -d:
 172.22.245.70
 ```
 
