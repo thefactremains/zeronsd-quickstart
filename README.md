@@ -192,7 +192,7 @@ If we don't have packages for your platform, you can install it with cargo.
 
 ## Serve DNS
 
-For each network you want to serve DNS for, do the following
+For each network you want to serve DNS to, do the following
 
 ```
 zeronsd supervise -t ~/.token -f /etc/hosts -d beyond.corp 159924d630edb88e
