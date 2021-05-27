@@ -1,4 +1,3 @@
-
 # ZeroNSD Quickstart
 
 <p align="center">
@@ -149,7 +148,7 @@ ExecStart=/usr/bin/zerotier-systemd-manager
 WantedBy=multi-user.target
 EOF
 ```
-[O
+
 Finally, restart all the ZeroTier services.
 
 ```
