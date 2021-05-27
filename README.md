@@ -97,8 +97,8 @@ possible.
 ZeroNSD publishes rpm, deb, and msi packages, available at https://github.com/zerotier/zeronsd/releases 
 
 ```
-root@ubuntu:~# wget wget https://github.com/zerotier/zeronsd/releases/download/v0.1.2/zeronsd_0.1.2_amd64.deb
-root@ubuntu:~# dpkg -i zeronsd_0.1.2_amd64.deb
+root@ubuntu:~# wget https://github.com/zerotier/zeronsd/releases/download/v0.1.3/zeronsd_0.1.3_amd64.deb
+root@ubuntu:~# dpkg -i zeronsd_0.1.3_amd64.deb
 ```
 
 ### Cargo
@@ -110,8 +110,78 @@ root@ubuntu:~# /usr/bin/apt-get -y install net-tools librust-openssl-dev pkg-con
 root@ubuntu:~# /usr/bin/cargo install zeronsd --root /usr/local
 ```
 
-## Systemd
+## ZeroTier Systemd Manager
 
+curl -O https://storage.googleapis.com/golang/go1.16.4.linux-amd64.tar.gz
+tar xzvf go1.16.4.linux-amd64.tar.gz -C /usr/local/
+
+export GOPATH=/usr
+export GOROOT=/usr/local/go
+
+go get github.com/zerotier/zerotier-systemd-manager
+
+
+```
+cat <<EOF> /lib/systemd/system/zerotier-one.service
+[Unit]
+Description=ZeroTier One
+After=network.target
+Wants=systemd-networkd.service
+
+[Service]
+ExecStart=/usr/sbin/zerotier-one
+Restart=always
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+```
+cat <<EOF> /lib/systemd/system/zerotier-systemd-manager.timer
+[Unit]
+Description=Update zerotier per-interface DNS settings
+Requires=zerotier-systemd-manager.service
+
+[Timer]
+Unit=zerotier-systemd-manager.service
+OnStartupSec=60
+OnUnitInactiveSec=60
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+```
+
+```
+cat <<EOF> /lib/systemd/system/zerotier-systemd-manager.service
+[Unit]
+Description=Update zerotier per-interface DNS settings
+Wants=zerotier-systemd-manager.timer zerotier-one.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/zerotier-systemd-manager
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+Enable and start zerotier-systemd-manager
+
+`root@ubuntu:~#`
+
+```
+systemctl daemon-reload
+systemctl restart zerotier-one
+systemctl restart zerotier-systemd-manager
+systemctl enable  zerotier-systemd-manager
+```
+
+## Old Systemd
 We have a project for per-interface DNS resolution in the works. 
 If you're curious, you can check it out [here](https://github.com/zerotier/zerotier-systemd-manager).
 
@@ -219,5 +289,3 @@ Are you a Windows user?
 Does this work out of the box?  
 Does nslookup behave properly?  
 Let us know... feedback and pull requests welcome =)
-
--s
