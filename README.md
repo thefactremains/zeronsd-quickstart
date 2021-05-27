@@ -112,6 +112,7 @@ root@ubuntu:~# /usr/bin/cargo install zeronsd --root /usr/local
 
 ## ZeroTier Systemd Manager
 
+```
 curl -O https://storage.googleapis.com/golang/go1.16.4.linux-amd64.tar.gz
 tar xzvf go1.16.4.linux-amd64.tar.gz -C /usr/local/
 
@@ -119,7 +120,7 @@ export GOPATH=/usr
 export GOROOT=/usr/local/go
 
 go get github.com/zerotier/zerotier-systemd-manager
-
+```
 
 ```
 cat <<EOF> /lib/systemd/system/zerotier-one.service
