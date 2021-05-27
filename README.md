@@ -255,7 +255,7 @@ dig +short @172.22.245.70 example.com
 
 ## OSX
 
-OSX uses `dns-sd` for DNS resolution. Unfortunately, `nslookup`, `host`, and `dig` are broken on OSX.
+OSX uses `dns-sd` for DNS resolution. Unfortunately, `nslookup`,`host`, and `dig` are broken on OSX.  
 `ping` works.
 
 ```
@@ -270,13 +270,13 @@ To check out the system resolver settings, use: `scutil --dns`.
 
 The Ubuntu machine can be queried with
 
-`dns-sd -G v4 server.beyond.corp`
-`dns-sd -G v4 zt-3513e8b98d.beyond.corp`
+`dns-sd -G v4 server.beyond.corp`  
+`dns-sd -G v4 zt-3513e8b98d.beyond.corp`  
 
 The OSX machine be queried with
 
-`dns-sd -G v4 laptop.beyond.corp`
-`dns-sd -G v4 zt-eff05def90.beyond.corp`
+`dns-sd -G v4 laptop.beyond.corp`  
+`dns-sd -G v4 zt-eff05def90.beyond.corp`  
 
 ## Windows
 
