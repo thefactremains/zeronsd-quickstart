@@ -51,9 +51,9 @@ may download the MSI from the [ZeroTier Downloads](https://www.zerotier.com/down
 the remainder of this document, please replace the example network `159924d630edb88e` with a network ID your own.
 
 ```
-root@ubuntu:~# curl -s https://install.zerotier.com | bash
-root@ubuntu:~# zerotier-cli join 159924d630edb88e
-root@ubuntu:~# zerotier-cli  set 159924d630edb88e allowDNS=1
+curl -s https://install.zerotier.com | bash
+zerotier-cli join 159924d630edb88e
+zerotier-cli  set 159924d630edb88e allowDNS=1
 ```
 
 ```
@@ -177,8 +177,8 @@ possible.
 ZeroNSD publishes rpm, deb, and msi packages, available at https://github.com/zerotier/zeronsd/releases
 
 ```
-wget https://github.com/zerotier/zeronsd/releases/download/v0.1.3/zeronsd_0.1.3_amd64.deb
-dpkg -i zeronsd_0.1.3_amd64.deb
+wget https://github.com/zerotier/zeronsd/releases/download/v0.1.4/zeronsd_0.1.4_amd64.deb
+dpkg -i zeronsd_0.1.4_amd64.deb
 ```
 
 ### Cargo
@@ -215,32 +215,32 @@ Query the DNS server directly with the dig command
 
 The Ubuntu machine can be queried with:
 ```
-root@ubuntu:~# dig +short @172.22.245.70 zt-3513e8b98d.beyond.corp
+dig +short @172.22.245.70 zt-3513e8b98d.beyond.corp
 172.22.245.70
-root@ubuntu:~# dig +short @172.22.245.70 server.beyond.corp
+dig +short @172.22.245.70 server.beyond.corp
 172.22.245.70
 ```
 
 The OSX laptop can be queried with:
 ```
-root@ubuntu:~# dig +short @172.22.245.70 zt-eff05def90.beyond.corp
+dig +short @172.22.245.70 zt-eff05def90.beyond.corp
 172.22.245.70
-root@ubuntu:~# dig +short @172.22.245.70 laptop.beyond.corp
+dig +short @172.22.245.70 laptop.beyond.corp
 172.22.192.177
 ```
 
 Add a line to `/etc/hosts` and query again.
 
 ```
-root@ubuntu:~# echo "1.2.3.4 test" >> /etc/hosts
-root@ubuntu:~# dig +short @172.22.245.70 test.beyond.corp
+echo "1.2.3.4 test" >> /etc/hosts
+dig +short @172.22.245.70 test.beyond.corp
 1.2.3.4
 ```
 
 Query a domain on the public DNS to verify fall through
 
 ```
-root@ubuntu:~# dig +short @172.22.245.70 example.com
+dig +short @172.22.245.70 example.com
 93.184.216.34
 ```
 
