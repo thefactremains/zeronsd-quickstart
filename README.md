@@ -271,7 +271,7 @@ The OSX machine be queried with
 
 ## Windows
 
-Are you a Windows user?
-Does this work out of the box?
-Does nslookup behave properly?
+Are you a Windows user?  
+Does this work out of the box?  
+Does nslookup behave properly?  
 Let us know... feedback and pull requests welcome =)
