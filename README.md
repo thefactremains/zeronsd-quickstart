@@ -95,6 +95,7 @@ Finally, restart all the ZeroTier services.
 sudo systemctl daemon-reload
 sudo systemctl restart zerotier-one
 sudo systemctl enable  zerotier-systemd-manager.timer
+sudo systemctl enable  zerotier-systemd-manager.service
 sudo systemctl restart zerotier-systemd-manager.service
 ```
 
