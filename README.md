@@ -11,7 +11,7 @@ It was DNS.<br>
 
 ## Status
 
-* This is *very much* alpha software.
+* This is considered beta software.
 * This may end up integrated into ZeroTier 2.0, but for now, it is segregated to allow us to iterate quickly.
 * Here be Dragons.
 
